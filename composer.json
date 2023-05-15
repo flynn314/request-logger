@@ -1,0 +1,24 @@
+{
+	"name": "flynn314/request-logger",
+	"description": "Request logger",
+	"type": "library",
+	"license": "MIT",
+	"require": {
+		"php": "^7.4|^8.1|^8.2",
+		"laravel/framework": "^8.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Flynn314\\RequestLogger\\": "src"
+		}
+	},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Flynn314\\RequestLogger\\RequestLoggerServiceProvider"
+            ]
+        }
+    },
+	"minimum-stability": "dev",
+	"prefer-stable": true
+}
