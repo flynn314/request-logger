@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
-class LogRequest
+class LogRequestWithoutContent
 {
     public function handle(Request $request, \Closure $next)
     {
@@ -14,7 +14,6 @@ class LogRequest
         $record->method = $request->getMethod();
         $record->url = $request->url();
         $record->request_headers = (array) $request->headers->all();
-        $record->request_content = $request->getContent();
         $record->query = (array) $request->query();
         $record->ip = $request->ip();
         if ($request->user() && $request->user()->user_token_id) {
@@ -23,12 +22,8 @@ class LogRequest
         try {
             $record->save();
         } catch (\Throwable $e) {
-            $record->request_content = null;
-            $record->save();
-
             Log::error('Unable to log request', [
                 'message' => $e->getMessage(),
-                'request_content' => $request->getContent(),
                 'attributes' => $record->getAttributes(),
             ]);
         }
